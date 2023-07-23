@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <div class="row" style="margin-top:20px">
+    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+
+      <h2>Pop Table</h2>
+      <table id="dataTable" class="display">
+         <!-- Header Table -->
+         <thead>
+              <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Color</th>
+              </tr>
+          </thead>
+          <!-- Footer Table -->
+          <tfoot>
+              <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Color</th>
+              </tr>
+          </tfoot>
+      </table>
+    </div>
+</div>
+<script type="text/javascript">
+  $(document).ready( function () {
+
+   var table = $('#dataTable').DataTable({
+      "columns": [
+          { "data": "id"},
+          { "data": "name" },
+          { "data": "color" }
+      ]
+   });
+
+    $.ajax({
+      url: "/pops",
+      'headers': { 'Accept': 'application/json;odata=nometadata' },
+    success: function (data) {
+      table.rows.add( JSON.parse(data) ).draw();
+    }
+  });
+});
+
+</script>
+{% endblock %}
